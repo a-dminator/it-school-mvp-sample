@@ -5,6 +5,6 @@ interface RegistrationContract {
         fun displayError()
     }
     interface Presenter {
-        fun onRegistrationClick(fName: String, lName: String, login: String, password: String)
+        fun onRegistrationClick(fName: String, lName: String, login: String, password: String, photo: String)
     }
 }

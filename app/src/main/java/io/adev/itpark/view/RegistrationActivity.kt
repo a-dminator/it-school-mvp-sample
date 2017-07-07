@@ -22,7 +22,8 @@ class RegistrationActivity : RegistrationContract.View, AppCompatActivity() {
                     fNameEdit.text.toString(),
                     lNameEdit.text.toString(),
                     loginEdit.text.toString(),
-                    passwordEdit.text.toString())
+                    passwordEdit.text.toString(),
+                    photoEdit.text.toString())
         }
 
     }
