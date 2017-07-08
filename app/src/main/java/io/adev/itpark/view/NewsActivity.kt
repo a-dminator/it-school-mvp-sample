@@ -16,16 +16,38 @@ import java.util.concurrent.TimeUnit
 class NewsActivity : AppCompatActivity() {
 
     class New(
-        val title: String,//заголовок новости
-        val text: String,
-        val image: String)//текст новости
+        val title: String, // заголовок новости
+        val text: String,  // текст новости
+        val image: String) // картинка к новости
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
-        //создали в котлине список данных  который мы будем отображать(список новостей)
+        val l = listOf<Any>(1, 2, 3, 4, 5)
 
+        val a = l[4]
+
+        // generics
+        class Box<T> {
+
+            var content: T? = null
+
+            fun put(v: T) {
+                content = v
+            }
+
+            fun get(): T {
+                return content!!
+            }
+
+        }
+
+        val box = Box<Int>()
+        box.put(1)
+        box.get()
+
+        // пример запроса с помощью rxJava
         Observable.create<List<New>>
                 { emitter ->
 
