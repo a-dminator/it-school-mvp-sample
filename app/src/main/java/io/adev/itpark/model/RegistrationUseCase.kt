@@ -38,16 +38,14 @@ class RegistrationUseCase : UseCase<User, RegistrationUseCase.Criteria>() {
 
             val responseJson = JsonParser().parse(response).asJsonObject["response"].asJsonObject
 
-            val fName = responseJson["fName"].asString
-            val lName = responseJson["lName"].asString
-            val login = responseJson["login"].asString
-            val photo = responseJson["photo"].asString
-
-            val user = User(
-                    fName,
-                    lName,
-                    login,
-                    photo)
+            val user =
+                    User().apply {
+                        id    = responseJson["id"].asLong
+                        fName = responseJson["fName"].asString
+                        lName = responseJson["lName"].asString
+                        login = responseJson["login"].asString
+                        photo = responseJson["photo"].asString
+                    }
 
             emitter.onNext(user)
         }

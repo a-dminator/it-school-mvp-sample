@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.google.gson.JsonParser
 import io.adev.itpark.R
+import io.adev.itpark.db
+import io.adev.itpark.model.entity.User
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -51,6 +53,18 @@ class NewsActivity : AppCompatActivity() {
         Observable.create<List<New>>
                 { emitter ->
 
+                    val user =
+                            User().apply {
+                                id = 0
+                                fName = "Ivan"
+                                lName = "Petrov"
+                                login = "ivan"
+                                photo = "photo"
+                            }
+
+                    db.userDao().insert(User())
+                    db.userDao().all()
+
                     val client = OkHttpClient.Builder()
                             .readTimeout(1000L,TimeUnit.MILLISECONDS)
                             .build()
@@ -88,7 +102,6 @@ class NewsActivity : AppCompatActivity() {
                     recyclerView.adapter = adapter
                     recyclerView.layoutManager = LinearLayoutManager(this)
                 }
-
 
     }
 
