@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.google.gson.JsonParser
 import io.adev.itpark.R
 import io.adev.itpark.db
+import io.adev.itpark.model.entity.New
 import io.adev.itpark.model.entity.User
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,11 +17,6 @@ import okhttp3.Request
 import java.util.concurrent.TimeUnit
 
 class NewsActivity : AppCompatActivity() {
-
-    class New(
-        val title: String, // заголовок новости
-        val text: String,  // текст новости
-        val image: String) // картинка к новости
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,21 +45,22 @@ class NewsActivity : AppCompatActivity() {
         box.put(1)
         box.get()
 
+        val user =
+                User().apply {
+                    id = 0
+                    fName = "Ivan"
+                    lName = "Petrov"
+                    login = "ivan"
+                    photo = "photo"
+                }
+
+        db.userDao().insert(user)
+        db.userDao().all()
+
+
         // пример запроса с помощью rxJava
         Observable.create<List<New>>
                 { emitter ->
-
-                    val user =
-                            User().apply {
-                                id = 0
-                                fName = "Ivan"
-                                lName = "Petrov"
-                                login = "ivan"
-                                photo = "photo"
-                            }
-
-                    db.userDao().insert(User())
-                    db.userDao().all()
 
                     val client = OkHttpClient.Builder()
                             .readTimeout(1000L,TimeUnit.MILLISECONDS)

@@ -8,17 +8,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import io.adev.itpark.R
+import io.adev.itpark.model.entity.New
 import kotlinx.android.synthetic.main.item_news.view.*
 
 //generics можно почитать этот раздел
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.Holder>(){//создали класс адаптер для натсройки адаптера (правил)
 
-    var mData: List<NewsActivity.New> = emptyList()
+    var mData: List<New> = emptyList()
 
-    fun setData(data: List<NewsActivity.New>){//заполняем данными которые передаём
-
+    fun setData(data: List<New>) { //заполняем данными которые передаём
         mData = data
-        notifyDataSetChanged()//обновили данные в полях
+        notifyDataSetChanged() //обновили данные в полях
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {//заполняем содержимым

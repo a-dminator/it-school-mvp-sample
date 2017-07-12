@@ -11,6 +11,10 @@ import org.jetbrains.anko.sdk15.listeners.onClick
 
 class LoginActivity : LoginContract.View, AppCompatActivity() {
 
+    companion object {
+        private const val TAG = "LoginActivity"
+    }
+
     private val presenter: LoginContract.Presenter = LoginPresenter(this, this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
