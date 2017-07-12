@@ -11,7 +11,7 @@ interface UserDao {
     fun all(): List<User>
 
     @Query("SELECT * FROM users WHERE id >= :minId")
-    fun allMinId(minId: Long): List<User>
+    fun allMinId(minId: Int): List<User>
 
     @Insert
     fun insert(user: User)
