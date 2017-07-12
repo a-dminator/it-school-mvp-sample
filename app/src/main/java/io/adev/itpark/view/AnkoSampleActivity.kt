@@ -25,12 +25,13 @@ import org.jetbrains.anko.recyclerview.v7.recyclerView
 class AnkoSampleActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
+    private var news = emptyList<New>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var data = emptyList<New>()
-
+        /** Делал по гайу:
+         *  @see <a href="https://material.io/guidelines/components/cards.html#">гайду</a> */
         recyclerView = recyclerView {
 
             lparams(matchParent, wrapContent) {
@@ -43,7 +44,8 @@ class AnkoSampleActivity : AppCompatActivity() {
                 lateinit var image: ImageView
             }
 
-            adapter<New, Views>({ data }) {
+            adapter<New, Views> {
+                data { news }
                 createView {
                     cardView {
 
@@ -128,7 +130,7 @@ class AnkoSampleActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { news ->
-                    data = news
+                    this.news = news
                     recyclerView.adapter.notifyDataSetChanged()
                 }
 

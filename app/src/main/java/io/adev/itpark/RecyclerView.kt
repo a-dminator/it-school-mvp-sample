@@ -21,10 +21,29 @@ class _RecyclerViewHolder<out V : HolderViews>(
         itemView: View,
         val views: V) : RecyclerView.ViewHolder(itemView)
 
-class _RecyclerViewAdapter<out M, V : HolderViews>(
+class _RecyclerViewAdapter<M, V : HolderViews>(
         private val context: Context,
-        private val data: () -> List<M>,
         private val viewsClass: KClass<V>) : RecyclerView.Adapter<_RecyclerViewHolder<V>>() {
+
+    private var setData: List<M>? = null
+
+    private var getData = { emptyList<M>() }
+    fun data(getData: () -> List<M>) {
+        this.getData = getData
+    }
+
+    var data: List<M>
+        get() {
+            return if (setData != null) {
+                setData!!
+            } else {
+                getData()
+            }
+        }
+        set(value) {
+            setData = value
+            notifyDataSetChanged()
+        }
 
     private var _createView: (V.() -> View)? = null
     fun createView(createView: V.() -> View) {
@@ -41,11 +60,11 @@ class _RecyclerViewAdapter<out M, V : HolderViews>(
     }
 
     override fun getItemCount(): Int {
-        return data().size
+        return data.size
     }
 
     override fun onBindViewHolder(holder: _RecyclerViewHolder<V>?, position: Int) {
-        _bindView?.let { holder?.views?.it(data()[position]) }
+        _bindView?.let { holder?.views?.it(data[position]) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): _RecyclerViewHolder<V> {
@@ -59,10 +78,10 @@ class _RecyclerViewAdapter<out M, V : HolderViews>(
 
 }
 
-inline fun <M, reified V : HolderViews> _RecyclerView.adapter(noinline data: () -> List<M>, init: _RecyclerViewAdapter<M, V>.() -> Unit): _RecyclerViewAdapter<M, V> {
+inline fun <M, reified V : HolderViews> _RecyclerView.adapter(init: _RecyclerViewAdapter<M, V>.() -> Unit): _RecyclerViewAdapter<M, V> {
 
     val result =
-            _RecyclerViewAdapter(context, data, V::class).apply {
+            _RecyclerViewAdapter<M, V>(context, V::class).apply {
                 init()
             }
 
